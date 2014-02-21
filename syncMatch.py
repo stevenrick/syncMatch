@@ -6,17 +6,12 @@ Created on Jan 24, 2014
 '''
  
 import csv
-import sys
 import os
-import re
 import shutil
-import string
 import fnmatch
 import numpy as np
 import pylab as P
 from collections import Counter
-import subprocess as sp
-from decimal import Decimal
 import Tkinter, tkFileDialog
 from subprocess import Popen, PIPE
 
