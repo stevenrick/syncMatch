@@ -198,7 +198,7 @@ def syncMatch(directory, kinectAudio, smiVideo, moraeVideo):
 
 
 
-histoFlag = False
+histoFlag = True
 
 
 directory, kinectAudioFile, smiVideoFile, moraeVideoFile = main()
