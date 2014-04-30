@@ -88,17 +88,21 @@ def syncPrep(directory, kinectInput, smiInput, moraeInput):
     if not os.path.exists(tempOutput):
         os.makedirs(tempOutput)
     
-    ffmpeg_prep(kinectInput, tempOutput+'kinectMono.wav', 'prep')
-    ffmpeg_prep(smiInput, tempOutput+'smiMono.wav', 'prep')
-    ffmpeg_prep(moraeInput, tempOutput+'moraeMono.wav', 'prep')
+    ffmpeg_prep(kinectInput, tempOutput + 'kinectMono.wav', 'prep')
+    if smiInput != None:
+        ffmpeg_prep(smiInput, tempOutput + 'smiMono.wav', 'prep')
+    if moraeInput != None:
+        ffmpeg_prep(moraeInput, tempOutput + 'moraeMono.wav', 'prep')
+    
+    if smiInput != None:
+        ffmpeg_merge(tempOutput + 'kinectMono.wav', tempOutput + 'smiMono.wav', tempOutput + 'mergeKS.wav', 'merge')
+    if moraeInput != None:
+        ffmpeg_merge(tempOutput + 'kinectMono.wav', tempOutput + 'moraeMono.wav', tempOutput + 'mergeKM.wav', 'merge')
      
-    ffmpeg_merge(tempOutput+'kinectMono.wav', tempOutput+'smiMono.wav', tempOutput+'mergeKS.wav', 'merge')
-    ffmpeg_merge(tempOutput+'kinectMono.wav', tempOutput+'moraeMono.wav', tempOutput+'mergeKM.wav', 'merge')
-    ffmpeg_merge(tempOutput+'smiMono.wav', tempOutput+'moraeMono.wav', tempOutput+'mergeSM.wav', 'merge')
-     
-    vamp_sync(tempOutput+'mergeKS.wav', tempOutput+'KS.txt', 'sync')
-    vamp_sync(tempOutput+'mergeKM.wav', tempOutput+'KM.txt', 'sync')
-    vamp_sync(tempOutput+'mergeSM.wav', tempOutput+'SM.txt', 'sync')
+    if smiInput != None:
+        vamp_sync(tempOutput + 'mergeKS.wav', tempOutput + 'KS.txt', 'sync')
+    if moraeInput != None:
+        vamp_sync(tempOutput + 'mergeKM.wav', tempOutput + 'KM.txt', 'sync')
     
     return tempOutput
 
@@ -143,6 +147,8 @@ def main():
                 if fnmatch.fnmatch(filename, '*.mp4') and not fnmatch.fnmatch(filename, '._*'):
                     #print filename
                     moraeVideoFile = os.path.join(moraeDirectory, filename)
+            if os.listdir(moraeDirectory) == []:
+                moraeVideoFile = None
                         
         if dirContents == 'SMI':
             smiDirectory = directory+'/SMI'
@@ -150,6 +156,8 @@ def main():
                 if fnmatch.fnmatch(filename, '*.mp4') and not fnmatch.fnmatch(filename, '._*'):
                     #print filename
                     smiVideoFile = os.path.join(smiDirectory, filename)
+            if os.listdir(smiDirectory) == []:
+                smiVideoFile = None
     
     return directory, kinectAudioFile, smiVideoFile, moraeVideoFile
 
