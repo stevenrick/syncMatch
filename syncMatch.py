@@ -22,7 +22,7 @@ root.withdraw()
 vamp_cmd_strings = {
 'prep': '~/../../opt/local/bin/ffmpeg -i {0} -ac 1 -ar 16000 {1}',
 'merge': '~/../../opt/local/bin/ffmpeg -i {0} -i {1} -filter_complex amerge {2}',
-'sync': 'vamp/./vamp-simple-host match-vamp-plugin.dylib:match {0} 3 -o {1}'
+'sync': '/Users/quick/Develop/QuickSessionProcessor/vamp/./vamp-simple-host match-vamp-plugin.dylib:match {0} 3 -o {1}' #hardcoding location of vamp files
 }
 
 
@@ -88,21 +88,21 @@ def syncPrep(directory, kinectInput, smiInput, moraeInput):
     if not os.path.exists(tempOutput):
         os.makedirs(tempOutput)
     
-    ffmpeg_prep(kinectInput, tempOutput + 'kinectMono.wav', 'prep')
+    print ffmpeg_prep(kinectInput, tempOutput + 'kinectMono.wav', 'prep')
     if smiInput != None:
-        ffmpeg_prep(smiInput, tempOutput + 'smiMono.wav', 'prep')
+        print ffmpeg_prep(smiInput, tempOutput + 'smiMono.wav', 'prep')
     if moraeInput != None:
-        ffmpeg_prep(moraeInput, tempOutput + 'moraeMono.wav', 'prep')
+        print ffmpeg_prep(moraeInput, tempOutput + 'moraeMono.wav', 'prep')
     
     if smiInput != None:
-        ffmpeg_merge(tempOutput + 'kinectMono.wav', tempOutput + 'smiMono.wav', tempOutput + 'mergeKS.wav', 'merge')
+        print ffmpeg_merge(tempOutput + 'kinectMono.wav', tempOutput + 'smiMono.wav', tempOutput + 'mergeKS.wav', 'merge')
     if moraeInput != None:
-        ffmpeg_merge(tempOutput + 'kinectMono.wav', tempOutput + 'moraeMono.wav', tempOutput + 'mergeKM.wav', 'merge')
+        print ffmpeg_merge(tempOutput + 'kinectMono.wav', tempOutput + 'moraeMono.wav', tempOutput + 'mergeKM.wav', 'merge')
      
     if smiInput != None:
-        vamp_sync(tempOutput + 'mergeKS.wav', tempOutput + 'KS.txt', 'sync')
+        print vamp_sync(tempOutput + 'mergeKS.wav', tempOutput + 'KS.txt', 'sync')
     if moraeInput != None:
-        vamp_sync(tempOutput + 'mergeKM.wav', tempOutput + 'KM.txt', 'sync')
+        print vamp_sync(tempOutput + 'mergeKM.wav', tempOutput + 'KM.txt', 'sync')
     
     return tempOutput
 
