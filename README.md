@@ -1,3 +1,5 @@
 # syncMatch
 
-Python and other code for using MATCH to calculate offset between two audio inputs
+Python code for using ffmpeg + MATCH to calculate offset between two inputs
+
+Old and very hardcoded... use at own discretion
